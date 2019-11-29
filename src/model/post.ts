@@ -49,4 +49,8 @@ export interface PostItemData {
   distinguished?: any;
 }
 
+export interface PostItemUIData extends PostItemData {
+  read: Boolean;
+}
+
 interface Mediaembed {}

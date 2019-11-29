@@ -12,11 +12,11 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { PostItemData } from '@/model/post';
+import { PostItemUIData } from '@/model/post';
 export default Vue.extend({
   props: {
     item: {
-      type: Object as () => PostItemData,
+      type: Object as () => PostItemUIData,
     },
     index: {
       type: Number,

@@ -24,11 +24,12 @@
 import Vue from 'vue';
 import PostList from '@/components/PostList.vue';
 import { redditService } from '@/services/reddit';
-import { PostItemData } from '@/model/post';
+import { PostItemData, PostItemUIData } from '@/model/post';
 export default Vue.extend({
   data() {
     return {
       items: [] as PostItemData[] | null,
+      selectedPost: {} as PostItemData | null,
       navList: null,
     };
   },
@@ -37,9 +38,10 @@ export default Vue.extend({
   },
   methods: {
     async getPosts() {
-      this.items = await redditService.getPosts();
+      const items = await redditService.getPosts();
+      return items.map(i => ({ ...i, read: false })) as PostItemUIData[];
     },
-    select(item: PostItemData) {
+    select(item: PostItemUIData) {
       this.$store.dispatch('selectPost', item);
       const path = `/${item.id}`;
       if (this.$route.path !== path) {
@@ -48,6 +50,7 @@ export default Vue.extend({
     },
   },
   mounted() {
+    this.selectedPost = null;
     this.getPosts();
   },
 });

@@ -16,8 +16,14 @@ export default Vue.extend({
     }),
   },
   mounted() {
-    document.documentElement.scrollTop = 0;
-    const id = this.$route.params['id'] as string;
+    // TODO: to load from post
+    // normally it will get data from api endpoint
+    const id = this.$route.params.id as string;
+  },
+  watch: {
+    item() {
+      document.documentElement.scrollTop = 0;
+    },
   },
 });
 </script>

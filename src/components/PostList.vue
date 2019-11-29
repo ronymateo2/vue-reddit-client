@@ -14,13 +14,13 @@
 
 @<script lang="ts">
 import Vue from 'vue';
-import { PostItemData } from '@/model/post';
+import { PostItemUIData } from '@/model/post';
 import PostItem from './PostItem.vue';
 import PostListHeader from './PostListHeader.vue';
 export default Vue.extend({
   props: {
     items: {
-      type: Array as () => PostItemData[],
+      type: Array as () => PostItemUIData[],
     },
   },
   components: {
@@ -31,7 +31,7 @@ export default Vue.extend({
     dismiss(index: number) {
       this.items.splice(index, 1);
     },
-    select(item: PostItemData) {
+    select(item: PostItemUIData) {
       this.$emit('select', item);
     },
   },
