@@ -4,7 +4,8 @@
       <PostList :items="items" @select="select" @dismiss="dismiss"></PostList>
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn @click="dismissAll" block>Dismiss all </v-btn>
+          <v-btn @click="dismissAll" text>Dismiss all </v-btn>
+          <v-btn @click="getNextResult" text>Next</v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -49,12 +50,16 @@ export default Vue.extend({
     ...mapState({
       isLoaded: 'isLoaded',
       posts: 'posts',
+      next: 'next',
     }),
   },
   methods: {
-    async getPosts() {
-      const posts = await redditService.getPosts();
-      return posts.map((i: PostItemData) => ({ ...i, read: false })) as PostItemUIData[];
+    async getPosts(after?: string) {
+      const { results, next } = await redditService.getPosts(after);
+      return {
+        results: results.map((i: PostItemData) => ({ ...i, read: false })) as PostItemUIData[],
+        next,
+      };
     },
 
     dismiss(index: number) {
@@ -72,16 +77,24 @@ export default Vue.extend({
         this.$router.push(path);
       }
     },
-    dismissAll() {
-      this.$store.dispatch('loadPosts', []);
+    async dismissAll() {
+      await this.$store.dispatch('loadPosts', []);
       this.items = [];
+    },
+    async getNextResult() {
+      const { results, next } = await this.getPosts(this.next);
+      await this.$store.dispatch('appendPosts', results);
+      await this.$store.dispatch('next', next);
+      this.items = [...this.items, ...results];
     },
   },
   async mounted() {
     this.selectedPost = null;
     if (this.isLoaded === false) {
-      this.items = await this.getPosts();
-      await this.$store.dispatch('loadPosts', this.items);
+      const { results, next } = await this.getPosts();
+      await this.$store.dispatch('loadPosts', results);
+      await this.$store.dispatch('next', next);
+      this.items = results;
     } else {
       this.items = this.posts;
     }

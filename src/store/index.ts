@@ -10,6 +10,7 @@ export default new Vuex.Store({
     posts: [],
     selectedPost: null,
     gallery: [],
+    next: undefined,
   },
   mutations: {
     selectedPost(state, payload) {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     posts(state, payload) {
       state.posts = payload;
     },
+    next(state, payload) {
+      state.next = payload;
+    },
   },
   actions: {
     selectPost({ commit }, payload) {
@@ -36,9 +40,18 @@ export default new Vuex.Store({
     addToGallery({ commit }, payload) {
       commit('gallery', payload);
     },
+    isLoaded({ commit }, payload) {
+      commit('isLoaded', payload);
+    },
     loadPosts({ commit }, payload) {
       commit('posts', payload);
       commit('isLoaded', true);
+    },
+    appendPosts({ commit, state }, payload) {
+      commit('posts', [...state.posts, ...payload]);
+    },
+    next({ commit }, payload) {
+      commit('next', payload);
     },
   },
   modules: {},
