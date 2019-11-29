@@ -66,12 +66,15 @@ export default Vue.extend({
       this.items.splice(index, 1);
     },
     select(item: PostItemUIData) {
-      // TODO: dont mutate
+      // TODO: maybe user immutable list for this part in the future
       this.$store.dispatch('selectPost', item);
-      const itemSelected = this.items.find((t: PostItemUIData) => t.id === item.id);
-      if (itemSelected) {
-        itemSelected.read = true;
-      }
+      const itemsSelected = this.items.map((t: PostItemUIData) => ({
+        ...t,
+        read: t.id === item.id,
+      }));
+
+      this.items = itemsSelected;
+
       const path = `/post/${item.id}`;
       if (this.$route.path !== path) {
         this.$router.push(path);
