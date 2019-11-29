@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <PostList :items="items"></PostList>
+    <v-navigation-drawer app fixed clipped v-model="navList" width="400px" class="nav-drawer">
+      <PostList :items="items" @select="select"></PostList>
+    </v-navigation-drawer>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -13,6 +16,7 @@ export default Vue.extend({
   data() {
     return {
       items: [] as PostItemData[] | null,
+      navList: null,
     };
   },
   components: {
@@ -22,9 +26,21 @@ export default Vue.extend({
     async getPosts() {
       this.items = await redditService.getPosts();
     },
+    select(item: PostItemData) {
+      const path = `/${item.id}`;
+      if (this.$route.path !== path) {
+        this.$router.push(path);
+      }
+    },
   },
   mounted() {
     this.getPosts();
   },
 });
 </script>
+<style scoped>
+.nav-drawer {
+  margin-top: 48px !important;
+  max-height: calc(100% - 48px) !important;
+}
+</style>

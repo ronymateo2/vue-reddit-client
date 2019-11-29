@@ -6,8 +6,6 @@
       <div>{{ item.num_comments }}</div>
       <v-img :src="item.thumbnail"></v-img>
     </div>
-    <v-btn color="orange" text @click="dismiss">Dismiss</v-btn>
-    <v-divider></v-divider>
   </div>
 </template>
 <script lang="ts">
@@ -17,14 +15,6 @@ export default Vue.extend({
   props: {
     item: {
       type: Object as () => PostItemData,
-    },
-    index: {
-      type: Number,
-    },
-  },
-  methods: {
-    dismiss() {
-      this.$emit('dismiss', this.index);
     },
   },
 });
