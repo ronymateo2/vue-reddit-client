@@ -9,7 +9,7 @@
       <div>{{ item.author }}</div>
       <div>{{ item.title }}</div>
       <div>{{ item.num_comments }}</div>
-      <v-img v-if="item.thumbnail" :src="item.thumbnail"></v-img>
+      <PostImg v-if="item.thumbnail" :item="item"></PostImg>
     </div>
     <v-btn color="orange" text @click="dismiss">Dismiss</v-btn>
 
@@ -19,6 +19,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { PostItemUIData } from '@/model/post';
+import PostImg from './PostImg.vue';
 export default Vue.extend({
   props: {
     item: {
@@ -27,6 +28,9 @@ export default Vue.extend({
     index: {
       type: Number,
     },
+  },
+  components: {
+    PostImg,
   },
   methods: {
     dismiss() {
