@@ -1,12 +1,15 @@
 <template>
   <div class="home">
-    This is the post page
+    <PostList></PostList>
   </div>
 </template>
 
-<script>
-export default {
-  name: "home",
-  components: {}
-};
+<script lang="ts">
+import Vue from "vue";
+import PostList from "@/components/PostList.vue";
+export default Vue.extend({
+  components: {
+    PostList
+  }
+});
 </script>
