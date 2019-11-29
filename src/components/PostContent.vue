@@ -44,7 +44,7 @@ export default Vue.extend({
   },
   methods: {
     add() {
-      this.$emit('add', this.item);
+      this.$emit('add', this.$props.item);
     },
   },
 });

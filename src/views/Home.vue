@@ -28,6 +28,7 @@ import Vue from 'vue';
 import PostList from '@/components/PostList.vue';
 import { redditService } from '@/services/reddit';
 import { PostItemData, PostItemUIData } from '@/model/post';
+import { mapState } from 'vuex';
 export default Vue.extend({
   data() {
     return {
@@ -39,18 +40,25 @@ export default Vue.extend({
   components: {
     PostList,
   },
+  computed: {
+    ...mapState({
+      isLoaded: 'isLoaded',
+      posts: 'posts',
+    }),
+  },
   methods: {
     async getPosts() {
       const posts = await redditService.getPosts();
-      this.items = posts.map(i => ({ ...i, read: false })) as PostItemUIData[];
+      return posts.map((i: PostItemData) => ({ ...i, read: false })) as PostItemUIData[];
     },
+
     dismiss(index: number) {
       this.items.splice(index, 1);
     },
     select(item: PostItemUIData) {
       // TODO: dont mutate
       this.$store.dispatch('selectPost', item);
-      const itemSelected = this.items.find(t => t.id == item.id);
+      const itemSelected = this.items.find((t: PostItemUIData) => t.id === item.id);
       if (itemSelected) {
         itemSelected.read = true;
       }
@@ -60,9 +68,15 @@ export default Vue.extend({
       }
     },
   },
-  mounted() {
+  async mounted() {
+    debugger;
     this.selectedPost = null;
-    this.getPosts();
+    if (this.isLoaded === false) {
+      this.items = await this.getPosts();
+      await this.$store.dispatch('loadPosts', this.items);
+    } else {
+      this.items = this.posts;
+    }
   },
 });
 </script>
