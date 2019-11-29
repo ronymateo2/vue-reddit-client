@@ -2,6 +2,11 @@
   <div class="home">
     <v-navigation-drawer app fixed clipped v-model="navList" width="400px" class="nav-drawer">
       <PostList :items="items" @select="select" @dismiss="dismiss"></PostList>
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn @click="dismissAll" block>Dismiss all </v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
     <v-content style="margin-top:32px;">
       <v-container fluid grid-list-lg pa-0>
@@ -67,9 +72,12 @@ export default Vue.extend({
         this.$router.push(path);
       }
     },
+    dismissAll() {
+      this.$store.dispatch('loadPosts', []);
+      this.items = [];
+    },
   },
   async mounted() {
-    debugger;
     this.selectedPost = null;
     if (this.isLoaded === false) {
       this.items = await this.getPosts();
