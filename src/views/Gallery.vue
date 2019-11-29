@@ -1,19 +1,14 @@
 <template>
   <v-content style="margin-top:32px;">
-    <v-container fluid grid-list-lg pa-0>
-      <v-layout row wrap ma-0 align-center py-3>
-        <v-flex xs12 sm3 px-4 py-2 pb-0>
-          <v-btn class="elevation-0 ma-0 card-with-border">
-            Gallery
-            <v-icon class="ml-1">mdi-chevron-right</v-icon>
-          </v-btn>
+    <v-container grid-list-lg pt-0 pb-5>
+      <v-layout row wrap my-4 align-center>
+        <v-flex xs12 sm8 order-xs2 order-sm1>
+          <h4 class="display-1 d-block">
+            <b>Gallery</b>
+          </h4>
         </v-flex>
       </v-layout>
-      <v-layout row ma-0>
-        <v-flex xs12 pa-4>
-          <GalleryList :items="items"></GalleryList>
-        </v-flex>
-      </v-layout>
+      <GalleryList :items="items"></GalleryList>
     </v-container>
   </v-content>
 </template>
