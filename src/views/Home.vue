@@ -3,7 +3,20 @@
     <v-navigation-drawer app fixed clipped v-model="navList" width="400px" class="nav-drawer">
       <PostList :items="items" @select="select"></PostList>
     </v-navigation-drawer>
-    <router-view></router-view>
+    <v-content style="margin-top:32px;">
+      <v-container fluid grid-list-lg pa-0>
+        <v-layout row wrap ma-0 align-center py-3>
+          <v-flex xs12 sm3 px-4 py-2 pb-0 hidden-lg-and-up>
+            <v-btn class="elevation-0 ma-0 card-with-border" @click="postNav = true">View Posts</v-btn>
+          </v-flex>
+        </v-layout>
+        <v-layout row ma-0>
+          <v-flex xs12 pa-4>
+            <router-view></router-view>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
   </div>
 </template>
 
