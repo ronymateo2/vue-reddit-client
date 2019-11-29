@@ -29,7 +29,7 @@ export default Vue.extend({
   },
   methods: {
     dismiss(index: number) {
-      this.items.splice(index, 1);
+      this.$emit('dismiss', index);
     },
     select(item: PostItemUIData) {
       this.$emit('select', item);

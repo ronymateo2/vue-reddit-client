@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Layout from '@/layout/Layout.vue';
 import Content from '../views/posts/Content.vue';
+import Gallery from '../views/Gallery.vue';
 
 Vue.use(VueRouter);
 
@@ -17,7 +18,8 @@ const routes = [
         component: Home,
         children: [
           {
-            path: '/:id',
+            path: '/post/:id',
+            name: 'content',
             component: Content,
           },
         ],
@@ -25,7 +27,8 @@ const routes = [
       {
         path: '/gallery',
         name: 'gallery',
-        component: () => import('../views/Gallery.vue'),
+        component: Gallery,
+        // component: () => import('../views/Gallery.vue'),
       },
     ],
   },
