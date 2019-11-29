@@ -1,7 +1,5 @@
 # vue-ch-reddit-client
 
-## Include
-
 Features
 Demo: See [Application Demo](https://ronymateo2.github.io/vue-reddit-client/).
 
@@ -13,6 +11,22 @@ Demo: See [Application Demo](https://ronymateo2.github.io/vue-reddit-client/).
 - [x] Dismiss All Button (Animations is implemented).
 - [x] Support split layout
 - [x] Responsive design.
+
+## Decision
+
+- Use vuetify + material as a system design
+- Use Vuex to save the state of the application
+- Vue-router allows us to create 2 routes / and /gallery
+- Mock data for rapid prototyping
+- Responsive Design comes with vuetify (drawer component provides a decent responsive design)
+
+## Architecture
+
+- Views contain all routes and interaction with Vuex and any services
+- services contain all interaction with any rest API here it's possible to have more like auth, etc.
+- Components interact with Views. Communication is just with props and events. They don't have any knowledge of any route or state. They just provide specific functionality.
+- The model represents the entities in our application.
+- State using a simple Vuex model
 
 ## Project setup
 
