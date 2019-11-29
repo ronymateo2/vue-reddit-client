@@ -1,11 +1,5 @@
 <template>
-  <v-toolbar
-    dark
-    app
-    fixed
-    height="48"
-    class="py-3 elevation-0 dashboard-header"
-  >
+  <v-toolbar dark fixed height="48" class="py-3 elevation-0 dashboard-header">
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn text to="/">Post</v-btn>
@@ -15,11 +9,11 @@
   </v-toolbar>
 </template>
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
   computed: {},
-  methods: {}
+  methods: {},
 });
 </script>
 <style>
