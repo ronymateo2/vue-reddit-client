@@ -6,10 +6,21 @@
           <v-icon>mdi-checkbox-marked-circle</v-icon>
         </v-avatar>Seen
       </v-chip>
-      <div>{{ item.author }}</div>
-      <div>{{ item.title }}</div>
-      <div>{{ item.num_comments }}</div>
+      <div>
+        <v-icon>mdi-account</v-icon>
+        {{ item.author }}
+      </div>
+      <div>
+        <v-icon>mdi-message-text-outline</v-icon>
+        {{ item.title }}
+      </div>
       <PostImg v-if="item.thumbnail" :item="item"></PostImg>
+      <div>
+        <v-chip class="ma-2" color="green" text-color="white">
+          <v-avatar left class="green">{{ item.num_comments }}</v-avatar>
+          <v-icon>mdi-comment-multiple-outline</v-icon>
+        </v-chip>
+      </div>
     </div>
     <v-btn color="orange" text @click="dismiss">Dismiss</v-btn>
 
