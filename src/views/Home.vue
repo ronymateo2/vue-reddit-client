@@ -4,7 +4,7 @@
       <PostList :items="items" @select="select" @dismiss="dismiss"></PostList>
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn @click="dismissAll" text>Dismiss all </v-btn>
+          <v-btn @click="dismissAll" text>Dismiss all</v-btn>
           <v-btn @click="getNextResult" text>Next</v-btn>
         </div>
       </template>
@@ -65,7 +65,7 @@ export default Vue.extend({
     dismiss(index: number) {
       this.items.splice(index, 1);
     },
-    select(item: PostItemUIData) {
+    async select(item: PostItemUIData) {
       // TODO: maybe user immutable list for this part in the future
       this.$store.dispatch('selectPost', item);
       const itemsSelected = this.items.map((t: PostItemUIData) => ({
@@ -73,6 +73,7 @@ export default Vue.extend({
         read: t.id === item.id,
       }));
 
+      await this.$store.dispatch('loadPosts', itemsSelected);
       this.items = itemsSelected;
 
       const path = `/post/${item.id}`;
@@ -92,6 +93,7 @@ export default Vue.extend({
     },
   },
   async mounted() {
+    debugger;
     this.selectedPost = null;
     if (this.isLoaded === false) {
       const { results, next } = await this.getPosts();
