@@ -67,15 +67,14 @@ export default Vue.extend({
     },
     async select(item: PostItemUIData) {
       // TODO: maybe user immutable list for this part in the future
-      this.$store.dispatch('selectPost', item);
       const itemsSelected = this.items.map((t: PostItemUIData) => ({
         ...t,
         read: t.id === item.id,
       }));
-
-      await this.$store.dispatch('loadPosts', itemsSelected);
       this.items = itemsSelected;
 
+      await this.$store.dispatch('selectPost', item);
+      await this.$store.dispatch('loadPosts', itemsSelected);
       const path = `/post/${item.id}`;
       if (this.$route.path !== path) {
         this.$router.push(path);
